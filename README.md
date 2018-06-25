@@ -59,7 +59,7 @@ Deleting...
 Status: 204 No Content
 ```
 
-## Supported Resources
+## Supported Configuration Resources
 
 Support for resources is being added as needed.
 
@@ -95,3 +95,28 @@ Support for resources is being added as needed.
 - [ ] User Authenticator
 - [ ] User Group
 - [x] Virtual Server
+
+## Supported Statistics Resources
+- [ ] Actions
+- [ ] Bandwidth
+- [ ] Cache
+- [ ] Cloud API Credentials
+- [ ] Connection Rate Limit
+- [ ] Events
+- [ ] Extras
+- [ ] GLB Services
+- [ ] Globals
+- [ ] Listen IPs
+- [ ] Locations
+- [ ] Network Interface
+- [ ] Nodes
+- [ ] Per-location Service
+- [ ] Per Node SLM
+- [x] Pools
+- [ ] Rule Authenticators
+- [ ] Rules
+- [ ] Service Level Monitors
+- [ ] Service Protection
+- [ ] SSL OCSP Stapling
+- [ ] Traffic IPs
+- [ ] Virtual Servers

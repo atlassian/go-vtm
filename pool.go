@@ -7,7 +7,7 @@ import (
 
 // A Pool is a Stingray pool.
 type Pool struct {
-	jsonResource   `json:"-"`
+	jsonConfigResource   `json:"-"`
 	PoolProperties `json:"properties"`
 }
 

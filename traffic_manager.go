@@ -7,7 +7,7 @@ import (
 
 // A TrafficManager is a Stingray traffic manager.
 type TrafficManager struct {
-	jsonResource             `json:"-"`
+	jsonConfigResource             `json:"-"`
 	TrafficManagerProperties `json:"properties"`
 }
 

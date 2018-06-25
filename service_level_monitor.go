@@ -7,7 +7,7 @@ import (
 
 // A ServiceLevelMonitor is a Stingray service level monitor.
 type ServiceLevelMonitor struct {
-	jsonResource                  `json:"-"`
+	jsonConfigResource                  `json:"-"`
 	ServiceLevelMonitorProperties `json:"properties"`
 }
 

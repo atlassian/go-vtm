@@ -7,7 +7,7 @@ import (
 
 // A Monitor is a Stingray monitor.
 type Monitor struct {
-	jsonResource      `json:"-"`
+	jsonConfigResource      `json:"-"`
 	MonitorProperties `json:"properties"`
 }
 

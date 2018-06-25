@@ -7,7 +7,7 @@ import (
 
 // A VirtualServer is a Stingray virtual server.
 type VirtualServer struct {
-	jsonResource            `json:"-"`
+	jsonConfigResource            `json:"-"`
 	VirtualServerProperties `json:"properties"`
 }
 

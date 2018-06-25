@@ -6,7 +6,7 @@ import (
 )
 
 type EventType struct {
-	jsonResource        `json:"-"`
+	jsonConfigResource        `json:"-"`
 	EventTypeProperties `json:"properties"`
 }
 

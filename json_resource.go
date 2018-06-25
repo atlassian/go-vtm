@@ -1,10 +1,18 @@
 package stingray
 
 // jsonResource represents a JSON resource.
-type jsonResource struct {
-	resource
+type jsonConfigResource struct {
+	configResource
 }
 
-func (f *jsonResource) contentType() string {
+func (f *jsonConfigResource) contentType() string {
+	return "application/json"
+}
+
+type jsonStatsResource struct {
+	statsResource
+}
+
+func (f *jsonStatsResource) contentType() string {
 	return "application/json"
 }

@@ -6,7 +6,7 @@ import (
 )
 
 type Action struct {
-	jsonResource     `json:"-"`
+	jsonConfigResource     `json:"-"`
 	ActionProperties `json:"properties"`
 }
 

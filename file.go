@@ -2,7 +2,7 @@ package stingray
 
 // fileResource represents a file resource.
 type fileResource struct {
-	resource
+	configResource
 	Content []byte
 	Note    string
 }

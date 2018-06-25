@@ -7,7 +7,7 @@ import (
 
 // A TrafficIPGroup is a Stingray traffic IP group.
 type TrafficIPGroup struct {
-	jsonResource             `json:"-"`
+	jsonConfigResource             `json:"-"`
 	TrafficIPGroupProperties `json:"properties"`
 }
 

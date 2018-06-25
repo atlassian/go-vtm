@@ -8,25 +8,36 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"errors"
 )
 
 const (
-	basePath = "/api/tm/3.5/config/active/"
+	baseConfigPath = "/api/tm/3.5/config/active/"
+	baseStatsPath = "/api/tm/3.5/status/local_tm/statistics/"
+)
+
+type pathType int
+const (
+	configPath pathType = iota
+	statsPath
 )
 
 // A Client manages communication with the Stingray API.
 type Client struct {
 	// HTTP client used to communicate with the API.
-	Client *http.Client
+	Client    *http.Client
 
-	// API base URL
-	BaseURL *url.URL
+	// API base URL for configuration namespace
+	configURL *url.URL
+
+	// API base URL for stats namespace
+	statsURL  *url.URL
 
 	// Username used for communicating with the API.
-	Username string
+	Username  string
 
 	// Password used for communicating with the API.
-	Password string
+	Password  string
 }
 
 // NewClient returns a new Stingray API client, using the supplied
@@ -36,15 +47,23 @@ func NewClient(httpClient *http.Client, urlStr, username string, password string
 		httpClient = http.DefaultClient
 	}
 
-	u, _ := url.Parse(urlStr)
-	if u.Path == "" {
-		rel, _ := url.Parse(basePath)
-		u = u.ResolveReference(rel)
+	cu, _ := url.Parse(urlStr)
+	su := cu
+	var relStats *url.URL
+	if cu.Path == "" {
+		rel, _ := url.Parse(baseConfigPath)
+		cu = cu.ResolveReference(rel)
+		relStats, _ = url.Parse(baseStatsPath)
+	} else {
+		statsRelPath := "../../status/local_tm/statistics/"
+		relStats, _ = url.Parse(statsRelPath)
 	}
+	su = su.ResolveReference(relStats)
 
 	c := &Client{
 		Client:   httpClient,
-		BaseURL:  u,
+		configURL:  cu,
+		statsURL:   su,
 		Username: username,
 		Password: password,
 	}
@@ -54,20 +73,34 @@ func NewClient(httpClient *http.Client, urlStr, username string, password string
 
 // NewRequest creates a new request with the params
 func (c *Client) NewRequest(method, urlStr string, body *[]byte) (*http.Request, error) {
+	return c.doMakeRequest(configPath, method, urlStr, body)
+}
 
+func (c *Client) doMakeRequest(pathType pathType, method, urlStr string, body *[]byte) (*http.Request, error) {
 	var bodyreader io.Reader
+	var baseUrl *url.URL
 
 	if body != nil {
 		bodyreader = bytes.NewReader(*body)
 	}
 
-	rel, err := url.Parse(c.BaseURL.Path + urlStr)
+	rel, err := url.Parse(urlStr)
 	if err != nil {
 		return nil, err
 	}
 
-	u := c.BaseURL.ResolveReference(rel)
+	switch pathType {
+	case configPath:
+		baseUrl = c.configURL
+		break
+	case statsPath:
+		baseUrl = c.statsURL
+		break
+	default:
+		return nil, errors.New("Tried to make request with an unknown path type")
+	}
 
+	u := baseUrl.ResolveReference(rel)
 	req, err := http.NewRequest(method, u.String(), bodyreader)
 	if err != nil {
 		return nil, err
@@ -97,9 +130,10 @@ func (c *Client) Do(req *http.Request) (*http.Response, error) {
 
 // Get retrieves a resource
 func (c *Client) Get(r Resourcer) (*http.Response, error) {
+
 	u := fmt.Sprintf("%v/%v", r.endpoint(), r.Name())
 
-	req, err := c.NewRequest("GET", u, nil)
+	req, err := c.doMakeRequest(r.pathType(), "GET", u, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +142,6 @@ func (c *Client) Get(r Resourcer) (*http.Response, error) {
 	if err != nil {
 		return resp, err
 	}
-
 	body, err := ioutil.ReadAll(resp.Body)
 	defer resp.Body.Close()
 	if err != nil {

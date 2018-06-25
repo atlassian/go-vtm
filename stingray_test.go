@@ -45,8 +45,8 @@ func TestNewClient(t *testing.T) {
 		t.Errorf("NewClient Client is nil")
 	}
 
-	if c.BaseURL.String() != url {
-		t.Errorf("NewClient URL = %v, want %v", c.BaseURL.String(), url)
+	if c.configURL.String() != url {
+		t.Errorf("NewClient URL = %v, want %v", c.configURL.String(), url)
 	}
 
 	if c.Username != username {

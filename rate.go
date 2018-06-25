@@ -7,7 +7,7 @@ import (
 
 // A Rate is a Stingray rate shaping class.
 type Rate struct {
-	jsonResource   `json:"-"`
+	jsonConfigResource   `json:"-"`
 	RateProperties `json:"properties"`
 }
 

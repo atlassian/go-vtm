@@ -7,7 +7,7 @@ import (
 
 // A SSLServerKey is a Stingray trusted certificate.
 type SSLServerKey struct {
-	jsonResource           `json:"-"`
+	jsonConfigResource           `json:"-"`
 	SSLServerKeyProperties `json:"properties"`
 }
 

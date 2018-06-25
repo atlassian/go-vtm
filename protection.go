@@ -6,7 +6,7 @@ import (
 )
 
 type Protection struct {
-	jsonResource         `json:"-"`
+	jsonConfigResource         `json:"-"`
 	ProtectionProperties `json:"properties"`
 }
 
