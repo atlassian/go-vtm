@@ -1,4 +1,8 @@
 ##
+ 
+* Switch to v6.2 of the REST API
+
+##
 
 * Switch to v4.0 of the REST API
 
